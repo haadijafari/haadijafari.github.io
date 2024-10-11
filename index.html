@@ -773,9 +773,93 @@
           </div>
         </div>
       </section>
-      <!-- ======= End Certification Section ======= -->
-      {% resume %} {% include "./index-services.html" %} {% include
-      "./index-portfolio.html" %} {% hobbies %} {% contact %}
+      <!-- End Certification Section -->
+
+      <!-- {% resume %}  -->
+
+      <!-- Start Servicies Section -->
+      <section
+        id="services"
+        class="services bg-black shadow-lg my-5 ms-4 ms-lg-2 me-4 p-5"
+      >
+        <div class="container position-relative">
+          <div class="section-title">
+            <span class="text-secondary">Services</span>
+            <h2 class="text-primary">Services</h2>
+            <p>Services I can provide you are listed below</p>
+          </div>
+
+          <div class="row">
+            <div class="col-md-4">
+              <div class="service-box">
+                <div class="service-ico">
+                  <span class="ico-circle"><i class="bi bi-gear"></i></span>
+                </div>
+                <div class="service-content">
+                  <h2 class="s-title">Backend Development</h2>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="service-box">
+                <div class="service-ico">
+                  <span class="ico-circle"
+                    ><i class="bi bi-clipboard2-data"></i
+                  ></span>
+                </div>
+                <div class="service-content">
+                  <h2 class="s-title">Data analysis</h2>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="service-box">
+                <div class="service-ico">
+                  <span class="ico-circle"><i class="bi bi-database"></i></span>
+                </div>
+                <div class="service-content">
+                  <h2 class="s-title">Databases</h2>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="service-box">
+                <div class="service-ico">
+                  <span class="ico-circle"><i class="bi bi-brush"></i></span>
+                </div>
+                <div class="service-content">
+                  <h2 class="s-title">Frontend Development</h2>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="service-box">
+                <div class="service-ico">
+                  <span class="ico-circle"><i class="bi bi-braces"></i></span>
+                </div>
+                <div class="service-content">
+                  <h2 class="s-title">Responsive Design</h2>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="service-box">
+                <div class="service-ico">
+                  <span class="ico-circle"><i class="bi bi-search"></i></span>
+                </div>
+                <div class="service-content">
+                  <h2 class="s-title">SEO</h2>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- End Services Section -->
+
+      <!-- {% include "./index-portfolio.html" %} -->
+      <!-- {% hobbies %} -->
+      <!-- {% contact %} -->
     </main>
     <!-- ======= End Main Section ======= -->
 
@@ -795,8 +879,9 @@
         >
           <div class="row">
             <p class="col-6">
-              © 2023 Copyright <strong>Haadijafari</strong>. All Rights
-              Reserved.
+              © 2023 Copyright
+              <strong><a href="https://hadijafari.info">Haadijafari</a></strong
+              >. All Rights Reserved.
             </p>
             <a
               class="col-6"
@@ -807,13 +892,52 @@
           </div>
           <div class="row">
             <ul class="footer-social col-12 list-unstyled d-flex">
-              {% for item in social %}
+              <!-- Telegram -->
               <li class="social-item ms-2">
-                <a href="{{ item.link }}" class="col {{ item.title }}"
-                  ><i class="{{ item.bootstrap }}"></i
+                <a href="https://t.me/haadijafari" class="col Telegram"
+                  ><i class="bi bi-telegram"></i
                 ></a>
               </li>
-              {% endfor %}
+              <!-- End Telegram -->
+              <!-- Instagram -->
+              <li class="social-item ms-2">
+                <a
+                  href="https://instagram.com/haadijafari"
+                  class="col Instagram"
+                  ><i class="bi bi-instagram"></i
+                ></a>
+              </li>
+              <!-- End Instagram -->
+              <!-- Linkedin -->
+              <li class="social-item ms-2">
+                <a
+                  href="https://linkedin.com/in/haadijafari"
+                  class="col Linkedin"
+                  ><i class="bi bi-linkedin"></i
+                ></a>
+              </li>
+              <!-- End Linkedin -->
+              <!-- Github -->
+              <li class="social-item ms-2">
+                <a href="https://github.com/haadijafari" class="col Github"
+                  ><i class="bi bi-github"></i
+                ></a>
+              </li>
+              <!-- End Github -->
+              <!-- Whatsapp -->
+              <li class="social-item ms-2">
+                <a href="https://wa.me/+989373028477" class="col Whatsapp"
+                  ><i class="bi bi-whatsapp"></i
+                ></a>
+              </li>
+              <!-- End Whatsapp -->
+              <!-- X -->
+              <li class="social-item ms-2">
+                <a href="https://x.com/haadijafari" class="col X"
+                  ><i class="bi bi-twitter-x"></i
+                ></a>
+              </li>
+              <!-- End X -->
             </ul>
           </div>
         </div>

@@ -47,7 +47,7 @@ a:hover {
 #hero {
     width: 100%;
     height: 100vh;
-    background: url("../img/hero/hero-bg_001.jpg") top right;
+    background: url("../images/hero/hero-bg_001.jpg") top right;
     background-size: cover;
     position: relative;
 }
@@ -282,7 +282,7 @@ section {
 /* end counting content */
 
 .about .image {
-    background: url("../img/avatar/me.jpg") center center no-repeat;
+    background: url("../images/avatar/me.jpg") center center no-repeat;
     background-size: cover;
     min-height: 500px;
 }

@@ -1,0 +1,20 @@
+// custom variables
+$primary: #8E05C2;
+$mark-color: #000;
+$mark-bg: #8E05C2;
+
+// import the functions & variables
+@import 'scss/_functions.scss';
+@import 'scss/_variables.scss';
+
+$theme-colors-custom: (
+  "purple": #700B97,
+  "purple-light": #8E05C2,
+  "purple-dark": #3E065F,
+  "dark-gray": #111,
+);
+
+$theme-colors: map-merge($map1: $theme-colors-custom, $map2: $theme-colors);
+
+// import bootstrap
+@import 'scss/bootstrap.scss';

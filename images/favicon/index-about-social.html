@@ -1,0 +1,13 @@
+{% load static %}
+
+<!-- Social Media -->
+<img class="svg-devider" src="{% static './img/svg/about-social-divider-top.svg' %}" alt="My Happy SVG"/>
+<div class="container-fluid">
+    <div class="social-links row row-cols-3 row-cols-sm-auto d-flex justify-content-between align-content-center">
+        {% for item in social %}
+        	<a href="{{ item.link }}" class="col {{ item.title }}"><i class="{{ item.bootstrap }}"></i></a>
+        {% endfor %}
+    </div>
+</div>
+<img class="svg-devider" src="{% static './img/svg/about-social-divider-bottom.svg' %}" alt="My Happy SVG"/>
+<!-- end Social Media -->

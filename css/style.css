@@ -509,6 +509,10 @@ section {
     border: 2px solid var(--bs-purple-light);
 }
 
+.resume .resume-item img {
+    width: 100%;
+}
+
 
 /*--------------------------------------------------------------
 # Services
@@ -843,7 +847,7 @@ section {
     font-size: 15px;
 }
 
-.portfolio-details .portfolio-info ul li + li {
+.portfolio-details .portfolio-info ul li+li {
     margin-top: 10px;
 }
 
@@ -923,7 +927,7 @@ section {
     font-weight: 600;
 }
 
-.contact .email-form .error-message br + br {
+.contact .email-form .error-message br+br {
     margin-top: 25px;
 }
 

@@ -263,4 +263,11 @@
       moreLength: 0,
     });
   })();
-  
+
+// Age calculator
+document.addEventListener("DOMContentLoaded", function() {
+    var currentYear = new Date().getFullYear();
+    var birthYear = 2003;
+    var age = currentYear - birthYear;
+    document.getElementById("age").textContent = age;
+  });

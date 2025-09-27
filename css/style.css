@@ -528,7 +528,7 @@ section {
     padding: 2.5rem 1.3rem;
     margin-bottom: 3rem;
     text-align: center;
-    height: 15rem;
+    height: 95%;
 }
 
 .service-box:hover {
@@ -568,7 +568,7 @@ section {
 
 .service-box .s-title {
     font-size: 1.4rem;
-    text-transform: uppercase;
+    text-transform: capitalize;
     text-align: center;
     padding: 0.4rem 0;
     position: relative;
@@ -600,7 +600,7 @@ section {
 }
 
 .service-box .s-description {
-    color: #4e4e4e;
+    padding-top: 1rem;
 }
 
 /*--------------------------------------------------------------

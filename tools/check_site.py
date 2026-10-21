@@ -176,7 +176,7 @@ def refs_exist():
 @check
 def weight_budget():
     w = initial_weight()
-    assert w <= 600_000, "initial weight %d > 600000" % w
+    assert w <= 250_000, "initial weight %d > 250000" % w
 
 
 @check
@@ -961,7 +961,7 @@ JUNK = [
     "docs/superpowers/plans/2026-10-21-cleanup-candidates.md",
 ] + ["resume/Docs/" + f for f in (
     "Advanced_Python.png", "Basic_Python.png", "Django.png", "Git.png",
-    "OOP_Python.png", "Web Development_Front-end.png")]
+    "OOP_Python.png", "Web Development_Front-end.png")] + ["vendors/bootstrap-5.3.3-dist"]
 
 UNPUBLISHED = ["docs", "tools", "CLAUDE.md", "README.md", "resume/CV.odt",
                "resume/logos", "resume/Docs", "vendors/bootstrap-icons-1.11.3"]
@@ -1050,6 +1050,18 @@ def not_found_page():
     for r in refs:
         if is_local(r):
             assert os.path.exists(local_path(r)), "404 ref missing: %s" % r
+
+
+@check
+def no_bootstrap():
+    # the Front-end skills list mentions "Bootstrap" as text, so only check what the page loads
+    loaded = [a.get("href") or a.get("src") or "" for a in tags("link") + tags("script")]
+    assert not [u for u in loaded if "bootstrap" in u.lower()], "Bootstrap still linked"
+    assert "data-bs-theme" not in html(), "data-bs-theme is meaningless without Bootstrap"
+    assert re.search(r":root\s*{[^}]*color-scheme:\s*dark", css()), "no color-scheme: dark"
+    for cls in (".container", ".d-flex", ".d-lg-none", ".flex-column", ".justify-content-center",
+                ".align-items-center", ".visually-hidden"):
+        assert re.search(re.escape(cls) + r"\s*[{,]", css()), "utility %s not defined" % cls
 
 
 # ------------------------------------------------------------------ main

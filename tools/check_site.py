@@ -1078,6 +1078,9 @@ def glightbox_css_deferred():
     link = re.search(r'<link[^>]*glightbox\.min\.css[^>]*>', head.split("<noscript>")[0])
     assert link and 'media="print"' in link.group(0) and "this.media='all'" in link.group(0), "not deferred"
     assert re.search(r"<noscript>\s*<link[^>]*glightbox\.min\.css", head), "no <noscript> fallback"
+    # the deferred sheet is what hides the descriptions, so our own CSS must hide them before it arrives
+    assert re.search(r"\.glightbox-desc\s*{[^}]*display:\s*none\s*!important", css()), \
+        "lightbox descriptions flash on the page until glightbox.min.css loads"
 
 
 @check
@@ -1088,6 +1091,14 @@ def small_fixes():
     btt = [a for a in tags("a") if "back-to-top" in classes(a)]
     assert btt and btt[0].get("aria-label") == "Back to top", "back-to-top has no name"
     assert '<p class="resume-org">Freelance</p>' in section("resume"), "freelance role has no org"
+
+
+@check
+def claude_md_current():
+    doc = read("CLAUDE.md")
+    stale = [s for s in ("PureCounter", "Waypoints", "birthYear", "lists the same anchors",
+                         "linter, or test suite", "JSON-LD `Person` block") if s in doc]
+    assert not stale, "CLAUDE.md describes code that no longer exists: %s" % stale
 
 
 # ------------------------------------------------------------------ main

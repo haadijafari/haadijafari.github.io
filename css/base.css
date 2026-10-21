@@ -423,6 +423,11 @@ a.card:hover,
   color: var(--c-text);
 }
 
+/* GLightbox reads these as slide descriptions; glightbox.min.css loads deferred, so hide them here */
+.glightbox-desc {
+  display: none !important;
+}
+
 .btn-primary-pill,
 .btn-outline-pill {
   display: inline-flex;

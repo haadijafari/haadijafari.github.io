@@ -82,8 +82,8 @@ def hero():
     for w in (600, 1200):
         save_webp(crop, "images/hero/hadi-%d.webp" % w, w * 3 // 2, quality=74)
     og = src.crop(OG_CROP).resize((1200, 630), Image.LANCZOS)
-    og.save(p("images/og-image.jpg"), "JPEG", quality=80, optimize=True, progressive=True)
-    print("wrote images/og-image.jpg", os.path.getsize(p("images/og-image.jpg")))
+    og.save(p("hadi-jafari.jpg"), "JPEG", quality=80, optimize=True, progressive=True)
+    print("wrote hadi-jafari.jpg", os.path.getsize(p("hadi-jafari.jpg")))
 
 
 def hobbies():

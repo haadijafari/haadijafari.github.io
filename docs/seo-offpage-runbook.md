@@ -64,14 +64,15 @@ LinkedIn ranks at the top of personal name search results. Proper cross-linking 
   - **Last Name:** `Jafari`
   - **Headline:** `Django Developer | AI & Soft Computing MSc Student | Co-founder & CTO at Vira Kavane Zista`
 
-- [ ] **3.2 Custom Action / Website Link**
-  - In your profile intro, click **Edit** (pencil icon).
-  - Under **Custom button / Website**, select **Link**:
+- [ ] **3.2 Custom Action / Website Button (Creator Mode or Premium accounts)**
+  - If your account supports it, click **Edit** (pencil icon) on your profile intro.
+  - Under **Custom button**, select **Link**:
     - **Link:** `https://hadij.ir/`
     - **Link text:** `Personal Portfolio (hadij.ir)`
 
-- [ ] **3.3 Contact Info**
-  - Ensure Website in Contact Info is set to `https://hadij.ir`.
+- [ ] **3.3 Contact Info (Available on all accounts)**
+  - In your profile intro, click **Contact info**.
+  - Under **Website**, set URL to `https://hadij.ir` and select type `Personal`.
 
 ---
 

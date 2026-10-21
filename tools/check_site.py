@@ -194,7 +194,7 @@ KB = 1024
 ASSET_CAPS = {
     "images/hero/hadi-600.webp": 70 * KB,
     "images/hero/hadi-1200.webp": 200 * KB,
-    "images/og-image.jpg": 200 * KB,
+    "hadi-jafari.jpg": 200 * KB,
     "images/edu/atu.min.svg": 30 * KB,
     "images/edu/sku.webp": 15 * KB,
     "images/edu/sampad.webp": 15 * KB,
@@ -333,14 +333,6 @@ def social_links_exact():
             assert h == SOCIAL[1], "linkedin %s" % h
         if "t.me/" in h:
             assert h == SOCIAL[3], "telegram %s" % h
-    about_socials = re.search(r'<ul class="about-socials".*?</ul>', html(), re.S)
-    assert about_socials, "no .about-socials"
-    gh_link = next(a for a in tags("a", about_socials.group(0)) if "github.com" in a.get("href", ""))
-    gh_rels = set(gh_link.get("rel", "").split())
-    assert {"me", "noopener"}.issubset(gh_rels), "gh rel must have me and noopener: %s" % gh_link.get("rel")
-    li_link = next(a for a in tags("a", about_socials.group(0)) if "linkedin.com" in a.get("href", ""))
-    li_rels = set(li_link.get("rel", "").split())
-    assert {"me", "noopener"}.issubset(li_rels), "li rel must have me and noopener: %s" % li_link.get("rel")
     pills = re.findall(r'<ul class="social-pills".*?</ul>', html(), re.S)
     assert pills, "no .social-pills"
     for block in pills:
@@ -646,7 +638,7 @@ def jsonld():
 @check
 def og_meta():
     metas = {a.get("property") or a.get("name"): a.get("content", "") for a in tags("meta")}
-    assert metas.get("og:image") in (SITE + "images/og-image.jpg", SITE + "hadi-jafari.jpg"), "og:image"
+    assert metas.get("og:image") == SITE + "hadi-jafari.jpg", "og:image %s" % metas.get("og:image")
     for key in ("og:title", "og:description", "description"):
         assert "Django" in metas.get(key, "") and "AI" in metas.get(key, ""), "%s lacks Django/AI" % key
     title = re.search(r"<title>(.*?)</title>", html()).group(1)

@@ -1064,6 +1064,22 @@ def no_bootstrap():
         assert re.search(re.escape(cls) + r"\s*[{,]", css()), "utility %s not defined" % cls
 
 
+@check
+def hero_font_preloaded():
+    pre = [a for a in tags("link") if a.get("rel") == "preload" and a.get("as") == "font"]
+    assert [a.get("href") for a in pre] == ["fonts/pinyon-script.woff2"], "preloads %s" % pre
+    a = pre[0]
+    assert a.get("type") == "font/woff2" and "crossorigin" in a, "preload needs type and crossorigin"
+
+
+@check
+def glightbox_css_deferred():
+    head = html().split("</head>")[0]
+    link = re.search(r'<link[^>]*glightbox\.min\.css[^>]*>', head.split("<noscript>")[0])
+    assert link and 'media="print"' in link.group(0) and "this.media='all'" in link.group(0), "not deferred"
+    assert re.search(r"<noscript>\s*<link[^>]*glightbox\.min\.css", head), "no <noscript> fallback"
+
+
 # ------------------------------------------------------------------ main
 
 def main(argv):

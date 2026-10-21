@@ -427,7 +427,6 @@
      */
     const lightbox = GLightbox({
       selector: ".certifications-lightbox",
-      openEffect: "zoom",
       openEffect: "fade",
       loop: true,
       closeButton: true,

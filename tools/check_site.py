@@ -1080,6 +1080,16 @@ def glightbox_css_deferred():
     assert re.search(r"<noscript>\s*<link[^>]*glightbox\.min\.css", head), "no <noscript> fallback"
 
 
+@check
+def small_fixes():
+    assert mainjs().count("openEffect") == 1, "duplicate openEffect key"
+    downloads = [a["download"] for a in tags("a") if "download" in a]
+    assert downloads and all(d.endswith(".pdf") for d in downloads), "download names %s" % downloads
+    btt = [a for a in tags("a") if "back-to-top" in classes(a)]
+    assert btt and btt[0].get("aria-label") == "Back to top", "back-to-top has no name"
+    assert '<p class="resume-org">Freelance</p>' in section("resume"), "freelance role has no org"
+
+
 # ------------------------------------------------------------------ main
 
 def main(argv):

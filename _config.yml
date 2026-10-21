@@ -1,0 +1,11 @@
+# GitHub Pages publish filter. The site uses no Jekyll features; this file only
+# keeps dev-only and private paths off hadij.ir. Add new private paths here.
+exclude:
+  - "docs"
+  - "tools"
+  - "CLAUDE.md"
+  - "README.md"
+  - "resume/CV.odt"
+  - "resume/logos"
+  - "resume/Docs"
+  - "vendors/bootstrap-icons-1.11.3"

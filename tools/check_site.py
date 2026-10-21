@@ -931,6 +931,54 @@ def about_hover_effects():
         assert rule and "cursor: default" in rule.group(1), "text cursor on %s" % sel
 
 
+# --------------------------------------------------- SEO & cleanup
+
+JUNK = [
+    "vendors/bootstrap-5.3.3-dist/js", "vendors/bootstrap-5.3.3-dist/css/bootstrap.min.css.map",
+    "vendors/glightbox/css/plyr.css", "vendors/glightbox/css/plyr.min.css",
+    "vendors/glightbox/css/glightbox.css", "vendors/glightbox/js/glightbox.js",
+    "vendors/typed.js/typed.js", "vendors/typed.js/typed.min.js.map",
+    "images/hero/hero-bg-mobile.jpg", "images/hero/hero-bg.jpg", "images/hero/hero-bg_001.jpg",
+    "images/hero/hero-bg_001.jpg~", "images/hero/hero-bg_0012.jpg", "images/avatar/me2.jpg",
+    "images/portfolio", "images/main", "images/favicon/index-about-social.html",
+    "images/svg/about-social-divider-bottom.svg", "images/svg/about-social-divider-top.svg",
+    "images/svg/devider.svg", "images/svg/hero-bottom.svg", "images/svg/hobby.svg",
+    "images/svg/portfolio-single-footer.svg", "images/svg/portfolio-single-header.svg",
+    "images/svg/resume-bg.svg",
+] + ["images/hobbies/" + f for f in (
+    "book1.jpg", "book2.jpg", "chess1.jpg", "friends1.jpg", "music2.webp",
+    "psycho1.jpg", "psycho2.jpg", "default.webp", "default_back.jpg")] + ["fonts/" + f for f in (
+    "Arizonia-Regular.ttf", "DancingScript-VariableFont_wght.ttf",
+    "GreatVibes-Regular.ttf", "Niconne-Regular.ttf")] + [
+    "resume.pdf", "resume/Resume.pdf", "resume/resume.pdf", "resume/Docs/Hadi_Jafari.pdf",
+    "docs/superpowers/plans/2026-10-21-cleanup-candidates.md",
+] + ["resume/Docs/" + f for f in (
+    "Advanced_Python.png", "Basic_Python.png", "Django.png", "Git.png",
+    "OOP_Python.png", "Web Development_Front-end.png")]
+
+UNPUBLISHED = ["docs", "tools", "CLAUDE.md", "README.md", "resume/CV.odt",
+               "resume/logos", "resume/Docs", "vendors/bootstrap-icons-1.11.3"]
+
+
+@check
+def no_junk_files():
+    left = [p for p in JUNK if os.path.exists(os.path.join(ROOT, p))]
+    assert not left, "still present: %s" % left
+
+
+@check
+def publish_hygiene():
+    assert "__pycache__/" in read(".gitignore").split("\n"), "__pycache__ not ignored"
+    assert not os.path.exists(os.path.join(ROOT, ".nojekyll")), ".nojekyll disables _config.yml exclude"
+    cfg = read("_config.yml")
+    excluded = re.findall(r"^\s*-\s*\"?([^\"\n]+?)\"?\s*$", cfg, re.M)
+    missing = [p for p in UNPUBLISHED if p not in excluded]
+    assert re.search(r"^exclude:", cfg, re.M) and not missing, "not excluded: %s" % missing
+    for p in ("resume/hadi_jafari_resume.pdf", "images/certifications/EF-SET-Certificate.pdf",
+              "images/certifications/BTCO-Certificate.pdf", "images/svg/footer-top.svg"):
+        assert os.path.exists(os.path.join(ROOT, p)), "needed file deleted: %s" % p
+
+
 # ------------------------------------------------------------------ main
 
 def main(argv):

@@ -9,12 +9,16 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://hadij.ir/#resume</loc>
+    <loc>https://hadij.ir/#projects</loc>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://hadij.ir/#certifications</loc>
     <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hadij.ir/#resume</loc>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://hadij.ir/#services</loc>

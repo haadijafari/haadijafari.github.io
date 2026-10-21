@@ -852,7 +852,12 @@ def about_socials():
     assert [a.get("href") for a in tags("use", ul.group(0))] == SOCIAL_ICONS, "icons"
     for a in links:
         if a["href"].startswith("http"):
-            assert a.get("target") == "_blank" and a.get("rel") == "noopener", a["href"]
+            assert a.get("target") == "_blank", a["href"]
+            rels = set(a.get("rel", "").split())
+            if a["href"] in (SOCIAL[0], SOCIAL[1]):
+                assert rels == {"me", "noopener"}, "%s rel: %s" % (a["href"], a.get("rel"))
+            else:
+                assert rels == {"noopener"}, "%s rel: %s" % (a["href"], a.get("rel"))
 
 
 @check

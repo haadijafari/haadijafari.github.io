@@ -979,6 +979,44 @@ def publish_hygiene():
         assert os.path.exists(os.path.join(ROOT, p)), "needed file deleted: %s" % p
 
 
+SITE = "https://hadij.ir/"
+
+
+def metas():
+    return {a.get("property") or a.get("name"): a.get("content", "") for a in tags("meta")}
+
+
+@check
+def head_meta():
+    m = metas()
+    canon = [a["href"] for a in tags("link") if a.get("rel") == "canonical"]
+    assert canon == [SITE], "canonical %s" % canon
+    assert m.get("og:url") == SITE, "og:url %s" % m.get("og:url")
+    expect = {"og:type": "profile", "og:site_name": "Hadi Jafari", "og:locale": "en_US",
+              "profile:first_name": "Hadi", "profile:last_name": "Jafari",
+              "theme-color": "#0b0b0f", "twitter:image": SITE + "images/og-image.jpg"}
+    bad = {k: m.get(k) for k, v in expect.items() if m.get(k) != v}
+    assert not bad, "wrong meta %s" % bad
+    for k in ("og:image:alt", "twitter:title", "twitter:description", "twitter:image:alt"):
+        assert m.get(k), "missing %s" % k
+    assert m["twitter:title"] == m["og:title"] and m["twitter:description"] == m["og:description"], "twitter != og"
+    assert "keywords" not in m, "meta keywords is ignored by Google; drop it"
+    icons = {(a.get("rel"), a.get("href")) for a in tags("link")}
+    assert ("icon", "images/favicon/favicon.ico") in icons, "favicon.ico not linked"
+    assert ("icon", "images/favicon/android-chrome-192x192.png") in icons, "no 48px-multiple PNG icon"
+
+
+@check
+def manifest():
+    d = json.loads(read("images/favicon/site.webmanifest"))
+    assert d.get("name") == "Hadi Jafari" and d.get("short_name") == "Hadi Jafari", "names"
+    assert d.get("theme_color") == "#0b0b0f" and d.get("background_color") == "#0b0b0f", "colors"
+    assert d.get("start_url") == "/", "start_url"
+    for icon in d["icons"]:
+        path = os.path.normpath(os.path.join(ROOT, "images/favicon", icon["src"]))
+        assert os.path.exists(path), "manifest icon 404: %s" % icon["src"]
+
+
 # ------------------------------------------------------------------ main
 
 def main(argv):

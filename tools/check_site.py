@@ -1038,6 +1038,20 @@ def jsonld_graph():
     assert p.get("alternateName") == "هادی جعفری", "alternateName"
 
 
+@check
+def not_found_page():
+    page = read("404.html")
+    robots = [a.get("content") for a in tags("meta", page) if a.get("name") == "robots"]
+    assert robots == ["noindex"], "404 must be noindex"
+    refs = [a.get(k) for t, a in _collect(page).tags for k in ("href", "src") if a.get(k)]
+    rel = [r for r in refs if is_local(r) and not r.startswith("/")]
+    assert not rel, "relative refs break at nested 404 URLs: %s" % rel
+    assert any(a.get("href") == "/" for a in tags("a", page)), "no link home"
+    for r in refs:
+        if is_local(r):
+            assert os.path.exists(local_path(r)), "404 ref missing: %s" % r
+
+
 # ------------------------------------------------------------------ main
 
 def main(argv):

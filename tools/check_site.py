@@ -333,6 +333,14 @@ def social_links_exact():
             assert h == SOCIAL[1], "linkedin %s" % h
         if "t.me/" in h:
             assert h == SOCIAL[3], "telegram %s" % h
+    about_socials = re.search(r'<ul class="about-socials".*?</ul>', html(), re.S)
+    assert about_socials, "no .about-socials"
+    gh_link = next(a for a in tags("a", about_socials.group(0)) if "github.com" in a.get("href", ""))
+    gh_rels = set(gh_link.get("rel", "").split())
+    assert {"me", "noopener"}.issubset(gh_rels), "gh rel must have me and noopener: %s" % gh_link.get("rel")
+    li_link = next(a for a in tags("a", about_socials.group(0)) if "linkedin.com" in a.get("href", ""))
+    li_rels = set(li_link.get("rel", "").split())
+    assert {"me", "noopener"}.issubset(li_rels), "li rel must have me and noopener: %s" % li_link.get("rel")
     pills = re.findall(r'<ul class="social-pills".*?</ul>', html(), re.S)
     assert pills, "no .social-pills"
     for block in pills:
@@ -624,6 +632,10 @@ def jsonld():
     assert d.get("sameAs") == [SOCIAL[0], SOCIAL[1], SOCIAL[3], SOCIAL[4]], "sameAs %s" % d.get("sameAs")
     assert d.get("knowsLanguage") == ["English", "Persian"], "knowsLanguage"
     assert (d.get("worksFor") or {}).get("name") == "Vira Kavane Zista", "worksFor"
+    assert d.get("givenName") == "Hadi", "givenName %s" % d.get("givenName")
+    assert d.get("familyName") == "Jafari", "familyName %s" % d.get("familyName")
+    alts = d.get("alternateName") if isinstance(d.get("alternateName"), list) else [d.get("alternateName")]
+    assert "haadijafari" in alts and "هادی جعفری" in alts, "alternateName %s" % alts
     alumni = [a.get("name") for a in d.get("alumniOf", [])]
     assert "Shahrekord University" in alumni, "alumniOf %s" % alumni
     aff = d.get("affiliation") or {}
@@ -634,11 +646,12 @@ def jsonld():
 @check
 def og_meta():
     metas = {a.get("property") or a.get("name"): a.get("content", "") for a in tags("meta")}
-    assert metas.get("og:image") == "https://hadij.ir/images/og-image.jpg", "og:image"
+    assert metas.get("og:image") in (SITE + "images/og-image.jpg", SITE + "hadi-jafari.jpg"), "og:image"
     for key in ("og:title", "og:description", "description"):
         assert "Django" in metas.get(key, "") and "AI" in metas.get(key, ""), "%s lacks Django/AI" % key
     title = re.search(r"<title>(.*?)</title>", html()).group(1)
-    assert "Django" in title and "AI" in title, "title %s" % title
+    assert title.startswith("Hadi Jafari") and "Django" in title and "AI" in title, "title %s" % title
+    assert "haadijafari" in metas.get("description", ""), "description lacks haadijafari handle"
 
 
 @check
@@ -1000,8 +1013,9 @@ def head_meta():
     assert canon == [SITE], "canonical %s" % canon
     assert m.get("og:url") == SITE, "og:url %s" % m.get("og:url")
     expect = {"og:type": "profile", "og:site_name": "Hadi Jafari", "og:locale": "en_US",
-              "profile:first_name": "Hadi", "profile:last_name": "Jafari",
-              "theme-color": "#0b0b0f", "twitter:image": SITE + "images/og-image.jpg"}
+              "profile:first_name": "Hadi", "profile:last_name": "Jafari", "profile:username": "haadijafari",
+              "theme-color": "#0b0b0f", "og:image": SITE + "hadi-jafari.jpg",
+              "twitter:image": SITE + "hadi-jafari.jpg"}
     bad = {k: m.get(k) for k, v in expect.items() if m.get(k) != v}
     assert not bad, "wrong meta %s" % bad
     for k in ("og:image:alt", "twitter:title", "twitter:description", "twitter:image:alt"):
@@ -1011,6 +1025,11 @@ def head_meta():
     icons = {(a.get("rel"), a.get("href")) for a in tags("link")}
     assert ("icon", "images/favicon/favicon.ico") in icons, "favicon.ico not linked"
     assert ("icon", "images/favicon/android-chrome-192x192.png") in icons, "no 48px-multiple PNG icon"
+
+
+@check
+def seo_entity_image():
+    assert os.path.exists(os.path.join(ROOT, "hadi-jafari.jpg")), "hadi-jafari.jpg must exist at root"
 
 
 @check
@@ -1035,7 +1054,9 @@ def jsonld_graph():
     assert page["url"] == SITE and page["mainEntity"] == {"@id": SITE + "#person"}, "ProfilePage"
     p = jsonld_data()
     assert p["@id"] == SITE + "#person" and p["url"] == SITE, "Person id/url"
-    assert p.get("alternateName") == "هادی جعفری", "alternateName"
+    alts = p.get("alternateName") if isinstance(p.get("alternateName"), list) else [p.get("alternateName")]
+    assert "هادی جعفری" in alts and "haadijafari" in alts, "alternateName %s" % alts
+    assert p.get("image") == SITE + "hadi-jafari.jpg", "Person image %s" % p.get("image")
 
 
 @check

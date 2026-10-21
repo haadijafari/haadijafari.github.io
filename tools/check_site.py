@@ -606,16 +606,22 @@ def no_jokey_intros():
 
 # --------------------------------------------------------------- Task 13
 
-def jsonld_data():
+def jsonld_graph_nodes():
     m = re.search(r'<script type="application/ld\+json">(.*?)</script>', html(), re.S)
     assert m, "no JSON-LD"
-    return json.loads(m.group(1))
+    return json.loads(m.group(1))["@graph"]
+
+
+def jsonld_data():
+    people = [n for n in jsonld_graph_nodes() if n.get("@type") == "Person"]
+    assert len(people) == 1, "%d Person nodes" % len(people)
+    return people[0]
 
 
 @check
 def jsonld():
     d = jsonld_data()
-    assert d.get("sameAs") == [SOCIAL[0], SOCIAL[1], SOCIAL[4]], "sameAs %s" % d.get("sameAs")
+    assert d.get("sameAs") == [SOCIAL[0], SOCIAL[1], SOCIAL[3], SOCIAL[4]], "sameAs %s" % d.get("sameAs")
     assert d.get("knowsLanguage") == ["English", "Persian"], "knowsLanguage"
     assert (d.get("worksFor") or {}).get("name") == "Vira Kavane Zista", "worksFor"
     alumni = [a.get("name") for a in d.get("alumniOf", [])]
@@ -637,9 +643,10 @@ def og_meta():
 
 @check
 def sitemap():
-    locs = re.findall(r"<loc>https://hadij\.ir/(#[\w-]+)?</loc>", read("sitemap.xml"))
-    anchors = [l for l in locs if l]
-    assert anchors == NAV[1:], "sitemap anchors %s" % anchors
+    s = read("sitemap.xml")
+    assert re.findall(r"<loc>([^<]+)</loc>", s) == ["https://hadij.ir/"], "sitemap must list only https://hadij.ir/"
+    assert re.search(r"<lastmod>\d{4}-\d\d-\d\d</lastmod>", s), "no lastmod"
+    assert "<priority>" not in s, "priority is ignored; drop it"
 
 
 # ------------------------------------------------------- Final review fixes
@@ -1015,6 +1022,20 @@ def manifest():
     for icon in d["icons"]:
         path = os.path.normpath(os.path.join(ROOT, "images/favicon", icon["src"]))
         assert os.path.exists(path), "manifest icon 404: %s" % icon["src"]
+
+
+@check
+def jsonld_graph():
+    nodes = jsonld_graph_nodes()
+    ids = {n["@id"] for n in nodes}
+    assert {n["@type"] for n in nodes} == {"WebSite", "ProfilePage", "Person"}, "node types"
+    refs = re.findall(r'\{"@id":\s*"([^"]+)"\}', json.dumps(nodes))
+    assert refs and all(r in ids for r in refs), "dangling @id refs %s" % [r for r in refs if r not in ids]
+    page = next(n for n in nodes if n["@type"] == "ProfilePage")
+    assert page["url"] == SITE and page["mainEntity"] == {"@id": SITE + "#person"}, "ProfilePage"
+    p = jsonld_data()
+    assert p["@id"] == SITE + "#person" and p["url"] == SITE, "Person id/url"
+    assert p.get("alternateName") == "هادی جعفری", "alternateName"
 
 
 # ------------------------------------------------------------------ main

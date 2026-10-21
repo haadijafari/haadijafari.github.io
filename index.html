@@ -53,56 +53,88 @@
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "Hadi Jafari",
-    "url": "https://hadij.ir",
-    "image": "https://hadij.ir/images/og-image.jpg",
-    "sameAs": [
-      "https://github.com/haadijafari",
-      "https://www.linkedin.com/in/haadijafari/",
-      "https://instagram.com/hadijafari.exe"
-    ],
-    "description": "Django developer moving into AI and machine learning; AI & Soft Computing MSc student.",
-    "jobTitle": ["Co-founder & CTO", "Django Developer"],
-    "worksFor": {
-      "@type": "Organization",
-      "name": "Vira Kavane Zista"
-    },
-    "affiliation": {
-      "@type": "CollegeOrUniversity",
-      "name": "Allameh Tabataba'i University"
-    },
-    "alumniOf": [
+    "@graph": [
       {
-        "@type": "CollegeOrUniversity",
-        "name": "Shahrekord University"
+        "@type": "WebSite",
+        "@id": "https://hadij.ir/#website",
+        "url": "https://hadij.ir/",
+        "name": "Hadi Jafari",
+        "inLanguage": "en"
       },
       {
-        "@type": "HighSchool",
-        "name": "Shahid Ejei High School"
+        "@type": "ProfilePage",
+        "@id": "https://hadij.ir/#profile",
+        "url": "https://hadij.ir/",
+        "name": "Hadi Jafari | Django Developer · AI & ML",
+        "isPartOf": {
+          "@id": "https://hadij.ir/#website"
+        },
+        "mainEntity": {
+          "@id": "https://hadij.ir/#person"
+        }
+      },
+      {
+        "@type": "Person",
+        "@id": "https://hadij.ir/#person",
+        "name": "Hadi Jafari",
+        "alternateName": "هادی جعفری",
+        "url": "https://hadij.ir/",
+        "image": "https://hadij.ir/images/og-image.jpg",
+        "sameAs": [
+          "https://github.com/haadijafari",
+          "https://www.linkedin.com/in/haadijafari/",
+          "https://t.me/haadijafari",
+          "https://instagram.com/hadijafari.exe"
+        ],
+        "description": "Django developer moving into AI and machine learning; AI & Soft Computing MSc student.",
+        "jobTitle": [
+          "Co-founder & CTO",
+          "Django Developer"
+        ],
+        "worksFor": {
+          "@type": "Organization",
+          "name": "Vira Kavane Zista"
+        },
+        "affiliation": {
+          "@type": "CollegeOrUniversity",
+          "name": "Allameh Tabataba'i University"
+        },
+        "alumniOf": [
+          {
+            "@type": "CollegeOrUniversity",
+            "name": "Shahrekord University"
+          },
+          {
+            "@type": "HighSchool",
+            "name": "Shahid Ejei High School"
+          }
+        ],
+        "homeLocation": {
+          "@type": "Place",
+          "name": "Isfahan, Iran"
+        },
+        "knowsAbout": [
+          "Django",
+          "Django REST Framework",
+          "Python",
+          "Machine Learning",
+          "Artificial Intelligence",
+          "Soft Computing",
+          "Software Architecture",
+          "Docker",
+          "Web Development"
+        ],
+        "knowsLanguage": [
+          "English",
+          "Persian"
+        ],
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "contactType": "personal",
+          "email": "haadijafari2003@gmail.com"
+        }
       }
-    ],
-    "homeLocation": {
-      "@type": "Place",
-      "name": "Isfahan, Iran"
-    },
-    "knowsAbout": [
-      "Django",
-      "Django REST Framework",
-      "Python",
-      "Machine Learning",
-      "Artificial Intelligence",
-      "Soft Computing",
-      "Software Architecture",
-      "Docker",
-      "Web Development"
-    ],
-    "knowsLanguage": ["English", "Persian"],
-    "contactPoint": {
-      "@type": "ContactPoint",
-      "contactType": "personal",
-      "email": "haadijafari2003@gmail.com"
-    }
+    ]
   }
   </script>
 </head>

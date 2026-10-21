@@ -1,0 +1,6 @@
+.superpowers/
+# Full-resolution original of the hero photo (9.9 MB, camera EXIF); tools/build_assets.py
+# reads it locally, only the generated WebP files are published.
+images/hero/IMG_0154.jpg
+
+__pycache__/

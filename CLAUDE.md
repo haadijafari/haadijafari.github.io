@@ -20,14 +20,18 @@ Preview locally by serving the repo root, for example `python3 -m http.server 80
   - Projects: each `<article class="project-card">` in `[data-projects]` is one card (its glow colors come from the inline `--glow-1`/`--glow-2`). `js/main.js` builds the counter, dots, and the desktop contents list from the cards, so a new project only needs a new card. Phones get a swipeable deck; at 992px and up, a list plus fanned cards.
   - The age shown in About is computed in `js/main.js` from a hardcoded `birthYear`.
 - **No CSS framework.** Styles are self-contained. `css/base.css` starts with a small reset (the parts of Bootstrap Reboot the page relied on), then the color/type tokens on `:root` (the palette lives there, e.g. `--c-primary`, `--c-bg`), and ends with the few layout utilities `index.html` uses (`.container`, `.d-flex`, `.d-lg-none`, `.visually-hidden`, ...). The page is dark only (`color-scheme: dark`).
-- **Styles.** `css/base.css` holds global and utility styles (back-to-top, preloader, etc.). `css/style.css` holds per-section styles. Both use the `/*----- # Section -----*/` banner-comment convention.
-- **Template leftovers.** The page started as a Django/Jinja template. Comments like `{% include "./index-portfolio.html" %}` and the portfolio/Isotope code in `main.js` are inactive, because the page has no portfolio section. `images/portfolio/` is likewise unused.
+- **Styles.** `css/base.css` holds the reset, tokens, global components and utilities (back-to-top, cards, pills, etc.). `css/style.css` holds per-section styles. Both use the `/*----- # Section -----*/` banner-comment convention.
+- **Tools (`tools/`, not published).** `check_site.py` is the test suite: run `python3 tools/check_site.py` (or `-k <name>`) after every change; it must exit 0. `build_assets.py` regenerates every served WebP/SVG/WOFF2 from the originals kept in the repo (e.g. `images/certifications/*.jpg|png`, `images/svg/footer-top.svg`, `fonts/*.ttf`). `screens.sh` takes headless Firefox screenshots; clear `~/snap/firefox/common/claude-prof/cache2` first, or it may render stale CSS.
 
 ## Resume files
 
-The "Download CV" button links to `resume/hadi_jafari_resume.pdf`. The editable source is `resume/CV.odt`. The repo also contains other resume PDFs (`resume.pdf` at the root, `resume/Resume.pdf`, `resume/resume.pdf`, and the Persian/English `هادی_جعفری-*.pdf`). When updating "the resume", check which file is actually linked.
+The "Download CV" button links to `resume/hadi_jafari_resume.pdf`. The editable source is `resume/CV.odt` (unpublished). The Persian/English `resume/هادی_جعفری-*.pdf` versions are the only other CVs.
+
+## Publishing
+
+GitHub Pages publishes the whole repo except what `_config.yml` lists under `exclude` (`docs/`, `tools/`, `CLAUDE.md`, `resume/CV.odt`, ...). Add any new private or dev-only path there. Don't add a `.nojekyll` file: it would disable that filter. `404.html` must use root-absolute paths (`/css/...`), because Pages serves it at any missing URL.
 
 ## Git conventions
 
 - Commit subjects use a bracketed tag plus a Title Case summary: `[ADD] ...`, `[FIX] ...`, `[UPDATE] ...`.
-- The working copy sits on a filesystem where every file is mode 777 and `core.fileMode` is `true`, so `git status` shows nearly every file as modified with mode-only changes. Do not stage these. Stage specific files rather than `git add -A`, or ask the user about running `git config core.fileMode false`.
+- Every file in the working copy is mode 777, so this clone has `core.fileMode false`. Still stage specific files rather than `git add -A`.

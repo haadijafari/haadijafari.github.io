@@ -419,6 +419,7 @@ def no_nowrap_overflow():
 # --------------------------------------------------------------- Task 7
 
 PROJECTS = [
+    ("Harir Shams", "https://harirshams.ir/"),
     ("Tehran House Price Prediction", "https://github.com/haadijafari/House-Price-Prediction"),
     ("Tetris AI", "https://github.com/haadijafari/Tetris_AI"),
     ("Persian Character Recognizer", "https://github.com/haadijafari/Alphabet-Recognition"),
@@ -429,11 +430,11 @@ PROJECTS = [
 def projects():
     sec = section("projects")
     cards = re.findall(r'<article class="project-card".*?</article>', sec, re.S)
-    assert len(cards) == 3, "%d project cards" % len(cards)
+    assert len(cards) == len(PROJECTS), "%d project cards" % len(cards)
     for (title, url), card in zip(PROJECTS, cards):
         assert title in text(card), "title %s" % title
         assert url in [a.get("href") for a in tags("a", card)], "link %s" % url
-    assert "R² 0.822" in text(cards[0]), "R² 0.822 missing"
+    assert "R² 0.822" in text(cards[1]), "R² 0.822 missing"
 
 
 # --------------------------------------------------------------- Task 8

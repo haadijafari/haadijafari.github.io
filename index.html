@@ -339,6 +339,20 @@
           <ol class="project-index" aria-label="All projects" hidden></ol>
 
           <div class="project-stage" role="region" aria-roledescription="carousel" aria-label="Projects">
+            <article class="project-card" style="--glow-1: rgba(224, 49, 69, 0.65); --glow-2: rgba(59, 91, 219, 0.45);">
+              <svg class="project-art" viewBox="0 0 220 210" aria-hidden="true">
+                <path d="M110 186 C46 136 20 100 30 66 C40 34 88 26 110 62 C132 26 180 34 190 66 C200 100 174 136 110 186 Z"/>
+                <path d="M6 116 H66 L78 96 L92 144 L106 64 L120 128 L130 116 H214"/>
+              </svg>
+              <p class="project-cat">Machine Learning</p>
+              <h3>Coronary Artery Disease Prediction</h3>
+              <p>Diagnoses coronary artery disease from routine clinical measurements. The popular Kaggle copy of the UCI Cleveland data has an inverted target, remapped codes and hidden missing values, so I audited and fixed it before modelling with nested cross-validation and an interpretable logistic regression.</p>
+              <p class="project-result">Catches 27 of 28 disease cases on held-out patients (ROC AUC 0.936), with a Streamlit app that explains every prediction.</p>
+              <div class="project-foot">
+                <ul class="tags"><li class="tag">Python</li><li class="tag">scikit-learn</li><li class="tag">pandas</li><li class="tag">Streamlit</li><li class="tag">pytest</li></ul>
+                <a class="project-link" href="https://github.com/haadijafari/Coronary-Artery-Disease-Prediction" target="_blank" rel="noopener"><span class="visually-hidden">Coronary Artery Disease Prediction on GitHub</span><svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"/></svg></a>
+              </div>
+            </article>
             <article class="project-card" style="--glow-1: rgba(214, 138, 38, 0.65); --glow-2: rgba(142, 5, 194, 0.5);">
               <svg class="project-art" viewBox="0 0 220 210" aria-hidden="true">
                 <rect x="24" y="30" width="172" height="156" rx="14"/>

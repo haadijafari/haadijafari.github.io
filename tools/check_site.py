@@ -419,6 +419,7 @@ def no_nowrap_overflow():
 # --------------------------------------------------------------- Task 7
 
 PROJECTS = [
+    ("Coronary Artery Disease Prediction", "https://github.com/haadijafari/Coronary-Artery-Disease-Prediction"),
     ("Harir Shams", "https://harirshams.ir/"),
     ("Tehran House Price Prediction", "https://github.com/haadijafari/House-Price-Prediction"),
     ("Tetris AI", "https://github.com/haadijafari/Tetris_AI"),
@@ -434,7 +435,8 @@ def projects():
     for (title, url), card in zip(PROJECTS, cards):
         assert title in text(card), "title %s" % title
         assert url in [a.get("href") for a in tags("a", card)], "link %s" % url
-    assert "R² 0.822" in text(cards[1]), "R² 0.822 missing"
+    assert "27 of 28" in text(cards[0]), "CAD sensitivity missing"
+    assert "R² 0.822" in text(cards[2]), "R² 0.822 missing"
 
 
 # --------------------------------------------------------------- Task 8
